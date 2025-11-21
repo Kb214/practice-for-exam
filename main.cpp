@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 
 /* Gaming list sorted from good to bad
@@ -20,79 +21,79 @@
 
 */
 
-struct Game{
-    double year;
-    float rating;
-    std::string name;
-    std::string genre;
-};
+// struct Game{
+//     double year;
+//     float rating;
+//     std::string name;
+//     std::string genre;
+// };
 
 
-void addGame(std::vector<Game>& game){
-    Game g;
+// void addGame(std::vector<Game>& game){
+//     Game g;
 
-    std::cout << "Title: ";
-    std::getline(std::cin, g.name);
+//     std::cout << "Title: ";
+//     std::getline(std::cin, g.name);
     
-    std::cout << "Year: ";
-    std::cin >> g.year;
-    std::cin.ignore();
+//     std::cout << "Year: ";
+//     std::cin >> g.year;
+//     std::cin.ignore();
     
-    std::cout << "Genre: ";
-    std::getline(std::cin, g.genre);
+//     std::cout << "Genre: ";
+//     std::getline(std::cin, g.genre);
     
-    std::cout << "Rating(Out of 5): ";
-    std::cin >> g.rating;  
+//     std::cout << "Rating(Out of 5): ";
+//     std::cin >> g.rating;  
     
-    game.push_back(g);            
+//     game.push_back(g);            
 
 
-}
+// }
 
 
-void removeGame(std::vector<Game>& game){
-    std::string title;
+// void removeGame(std::vector<Game>& game){
+//     std::string title;
     
-    std::cout << "Remove Game: ";
-    std::getline(std::cin, title);
+//     std::cout << "Remove Game: ";
+//     std::getline(std::cin, title);
     
-    for(size_t x = 0; x < game.size(); ++x){ //go through the game vector
+//     for(size_t x = 0; x < game.size(); ++x){ //go through the game vector
 
-        if(game.at(x).name == title){ //if game is at this name and the name equals the title
-            game.erase(game.begin()+1); //remove game
-        }
-    }
+//         if(game.at(x).name == title){ //if game is at this name and the name equals the title
+//             game.erase(game.begin()+1); //remove game
+//         }
+//     }
 
-}
+// }
 
 
-void showGames(std::vector<Game>& game){
+// void showGames(std::vector<Game>& game){
 
-    for(size_t x = 0; x < game.size(); ++x){
-        std::cout << "\n";
+//     for(size_t x = 0; x < game.size(); ++x){
+//         std::cout << "\n";
         
-        std::cout << "Title: " << game.at(x).name << "\n";
-        std::cout << "Year: " << game.at(x).year << "\n";
-        std::cout << "Genre: " << game.at(x).genre << "\n";
-        std::cout << "Rating: " << game.at(x).rating << "\n";
-    }      
-}
+//         std::cout << "Title: " << game.at(x).name << "\n";
+//         std::cout << "Year: " << game.at(x).year << "\n";
+//         std::cout << "Genre: " << game.at(x).genre << "\n";
+//         std::cout << "Rating: " << game.at(x).rating << "\n";
+//     }      
+// }
 
 
-void changeRating(std::vector<Game>& game){
-    std::string title;
-    Game g;
+// void changeRating(std::vector<Game>& game){
+//     std::string title;
+//     Game g;
 
-    std::cout << "Title: ";
-    std::getline(std::cin, title);
+//     std::cout << "Title: ";
+//     std::getline(std::cin, title);
 
-    for(size_t x = 0; x < game.size(); ++x){
-        if(game.at(x).name == title){
-            std::cout << "Your New Rating: ";
-            std::cin >> game.at(x).rating; 
-        }
-    }
-}
+//     for(size_t x = 0; x < game.size(); ++x){
+//         if(game.at(x).name == title){
+//             std::cout << "Your New Rating: ";
+//             std::cin >> game.at(x).rating; 
+//         }
+//     }
+// }
 
 
 void choices(){
@@ -103,6 +104,7 @@ void choices(){
     std::cout << "4) SHOW games\n";
     std::cout << "5) Exit\n";
 }
+
 
 
 class Game{
@@ -125,8 +127,25 @@ class GameList{
 
     public:
 
-    void addGame(const Game& g){
-        games.push_back(g);
+    void addGame(){
+        std::string name, genre;
+        double year;
+        float rating;
+
+        std::cout << "Title: ";
+        std::getline(std::cin, name);
+        
+        std::cout << "Year: ";
+        std::cin >> year;
+        std::cin.ignore();
+        
+        std::cout << "Genre: ";
+        std::getline(std::cin, genre);
+        
+        std::cout << "Rating(Out of 5): ";
+        std::cin >> rating;  
+
+        games.push_back(Game(name,year,genre,rating));
     }
 
 
@@ -138,6 +157,7 @@ class GameList{
 
             if(games.at(x).name == title){ //if game is at this name and the name equals the title
                 games.erase(games.begin() + x); //remove game
+                return;
             }
         }
     }
@@ -171,6 +191,12 @@ class GameList{
         }
     }
 
+    void sortByRating() {
+        std::sort(games.begin(), games.end(),[] (const Game& a, const Game& b){
+            return a.rating > b.rating;
+        });
+    }
+
 };
 
 
@@ -179,8 +205,8 @@ class GameList{
 
 
 int main(){
-    std::vector<Game> game;
     int choice{0};
+    GameList mygames;
     
     std::cout << "\n======== Gaming List ========\n";
     std::cout << "Input your game, the genre, and rate it out of 5 stars    :    Your games will be automatically sorted from good to bad\n";
@@ -197,10 +223,10 @@ int main(){
         if (choice == 1){
         
             std::cout << "\n======== Enter Your Game's Details: ========\n";
-            addGame(game);
+            mygames.addGame();
             
             std::cout << "\n======== Your Added Games ========\n";
-            showGames(game);
+            mygames.getGames();
             
 
             choices();
@@ -208,7 +234,7 @@ int main(){
         }else if (choice == 2){
             std::cout << "\n======== Enter your game you want to remove: ========\n";
 
-            removeGame(game);
+            mygames.removeGame();
             
             std::cout << "\n======== Removed Game! ========\n";
 
@@ -219,17 +245,17 @@ int main(){
         }else if (choice == 3 ){
             std::cout << "What game rating do you want to choose? \n";
 
-            changeRating(game);
+            mygames.changeRating();
 
             std::cout << "\n======== Your New Game Rating ========\n";
-            showGames(game);
+            mygames.removeGame();
 
             choices();
 
             
         }else if(choice == 4){
             std::cout << "\n======== Your Games ========\n";
-            showGames(game);
+            mygames.getGames();
 
             choices();
 
