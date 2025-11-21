@@ -12,21 +12,19 @@
     STORE:
         into a class
         store that class into a vector
-        make functiond
+        make functions 
     SORT:
         with a lambda 
         BUT only after you've put in your GameList class
+        and made a game class
 
 */
 
 struct Game{
-    public:
     double year;
     float rating;
     std::string name;
     std::string genre;
-
-   
 };
 
 
@@ -105,6 +103,36 @@ void choices(){
     std::cout << "4) SHOW games\n";
     std::cout << "5) Exit\n";
 }
+
+
+class Game{
+    public:
+    
+    double year;
+    float rating;
+    std::string name;
+    std::string genre;
+
+    Game(double y, float r, std::string n, std::string g)
+    : year(y), rating(r), name(n), genre(g){}
+    
+};
+
+class GameList{
+    private: 
+
+    std::vector<Game> games;
+
+    public:
+
+    void addGame(const Game& game);
+    void removeGame(const Game& game);
+    void getGames(const Game& game);
+    void changeRating(const Game& game);
+
+};
+
+
 
 
 int main(){
