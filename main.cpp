@@ -26,9 +26,7 @@ struct Game{
     std::string name;
     std::string genre;
 
-    // Game(std::string n, std::string g, double y, float r) 
-    // : name(n), genre(g), year(y), rating(r){}
-
+   
 };
 
 
@@ -46,31 +44,38 @@ void addGame(std::vector<Game>& game){
     std::getline(std::cin, g.genre);
     
     std::cout << "Rating(Out of 5): ";
-    std::cin >> g.rating;        
+    std::cin >> g.rating;  
+    
+    game.push_back(g);            
+
 
 }
 
 void removeGame(std::vector<Game>& game){
+    std::string title;
+    
+    std::cout << "Remove Game: ";
+    std::getline(std::cin, title);
+    
+    for(size_t x = 0; x < game.size(); ++x){ //go through the game vector
+
+        if(game.at(x).name == title){ //if game is at this name and the name equals the title
+            game.erase(game.begin()+1); //remove game
+        }
+    }
 
 }
 
 
-//BUG! results not showing properly. need to loop through
-void showGame(std::vector<Game>& game){
-    Game g;
+void showGames(std::vector<Game>& game){
 
-    std::cout << "Name: ";
-    std::cout << g.name;
-    
-    std::cout << "\nYear: ";
-    std::cout << g.year;
-    std::cin.ignore();
-    
-    std::cout << "\nGenre: ";
-    std::cout << g.genre;
-    
-    std::cout << "\nRating(Out of 5): ";
-    std::cout << g.rating;        
+    for(size_t x = 0; x < game.size(); ++x){
+        
+        std::cout << "Game:" << game.at(x).name << "\n";
+        std::cout << "Year:" << game.at(x).year << "\n";
+        std::cout << "Genre:" << game.at(x).genre << "\n";
+        std::cout << "Rating:" << game.at(x).rating << "\n";
+    }      
 }
 
 int main(){
@@ -84,7 +89,8 @@ int main(){
     std::cout << "1) ADD Game\n";
     std::cout << "2) REMOVE Game\n";
     std::cout << "3) CHANGE Rating\n";
-    std::cout << "4) Exit\n";
+    std::cout << "4) SHOW games\n";
+    std::cout << "5) Exit\n";
     
     
     std::cout << "\nChoice: ";
@@ -98,9 +104,8 @@ int main(){
             std::cout << "\n======== Enter Your Game's Details: ========\n";
             addGame(game);
             
-            
-            std::cout << "\n======== Your Added Game ========\n";
-            showGame(game);
+            std::cout << "\n======== Your Added Games ========\n";
+            showGames(game);
             
 
             std::cout << "\n======== Would you like to:========\n";
@@ -111,12 +116,11 @@ int main(){
 
 
         }else if (choice == 2){
-            // std::cout << "\n======== Enter your game you want to remove: ========\n";
+            std::cout << "\n======== Enter your game you want to remove: ========\n";
+
+            removeGame(game);
             
-            // std::cout << "Remove Game:";
-            // std::getline(std::cin, name); 
-            
-            // std::cout << "\n======== Remove Game! ========\n";
+            std::cout << "\n======== Removed Game! ========\n";
         
         }else if (choice == 3 ){
             // std::cout << "What game rating do you want to choose? \n";
@@ -127,8 +131,12 @@ int main(){
             // std::cout << "Change your rating: ";
             // std::cin >> rating; 
             
+        }else if(choice == 4){
+            std::cout << "\n======== Your Games ========\n";
+            showGames(game);
+
         }else{
-            choice == 4; 
+            choice == 5; 
         }
 
         std::cout << "\nChoice: ";
@@ -136,8 +144,6 @@ int main(){
         std::cin.ignore();
     
     }
-    
-    
     
     return 0;
 }
