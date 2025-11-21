@@ -12,25 +12,70 @@
     STORE:
         into a class
         store that class into a vector
-        make functions
+        make functiond
+    SORT:
+        with a lambda 
+        BUT only after you've put in your GameList class
 
 */
 
-class Game{
-
-};
-
-class GameList{
-
-};
-
-int main(){
-    int choice{0};
+struct Game{
+    public:
     double year;
     float rating;
     std::string name;
     std::string genre;
+
+    // Game(std::string n, std::string g, double y, float r) 
+    // : name(n), genre(g), year(y), rating(r){}
+
+};
+
+
+void addGame(std::vector<Game>& game){
+    Game g;
+
+    std::cout << "Name: ";
+    std::getline(std::cin, g.name);
     
+    std::cout << "Year: ";
+    std::cin >> g.year;
+    std::cin.ignore();
+    
+    std::cout << "Genre: ";
+    std::getline(std::cin, g.genre);
+    
+    std::cout << "Rating(Out of 5): ";
+    std::cin >> g.rating;        
+
+}
+
+void removeGame(std::vector<Game>& game){
+
+}
+
+
+//BUG! results not showing properly. need to loop through
+void showGame(std::vector<Game>& game){
+    Game g;
+
+    std::cout << "Name: ";
+    std::cout << g.name;
+    
+    std::cout << "\nYear: ";
+    std::cout << g.year;
+    std::cin.ignore();
+    
+    std::cout << "\nGenre: ";
+    std::cout << g.genre;
+    
+    std::cout << "\nRating(Out of 5): ";
+    std::cout << g.rating;        
+}
+
+int main(){
+    std::vector<Game> game;
+    int choice{0};
     
     std::cout << "\n======== Gaming List ========\n";
     std::cout << "Input your game, the genre, and rate it out of 5 stars    :    Your games will be automatically sorted from good to bad\n";
@@ -51,22 +96,11 @@ int main(){
         if (choice == 1){
         
             std::cout << "\n======== Enter Your Game's Details: ========\n";
-            std::cout << "Name: ";
-            std::getline(std::cin, name);
-            
-            std::cout << "Year: ";
-            std::cin >> year;
-            std::cin.ignore();
-            
-            std::cout << "Genre: ";
-            std::getline(std::cin, genre);
-            
-            std::cout << "Rating(Out of 5): ";
-            std::cin >> rating;
+            addGame(game);
             
             
             std::cout << "\n======== Your Added Game ========\n";
-            std::cout << "Game: " << name << "\n" << "Year: " << year << "\n" << "Genre: " << genre << "\n" << "Rating: " << rating << "\n";
+            showGame(game);
             
 
             std::cout << "\n======== Would you like to:========\n";
@@ -77,21 +111,21 @@ int main(){
 
 
         }else if (choice == 2){
-            std::cout << "\n======== Enter your game you want to remove: ========\n";
+            // std::cout << "\n======== Enter your game you want to remove: ========\n";
             
-            std::cout << "Remove Game:";
-            std::getline(std::cin, name); 
+            // std::cout << "Remove Game:";
+            // std::getline(std::cin, name); 
             
-            std::cout << "\n======== Remove Game! ========\n";
+            // std::cout << "\n======== Remove Game! ========\n";
         
         }else if (choice == 3 ){
-            std::cout << "What game rating do you want to choose? \n";
+            // std::cout << "What game rating do you want to choose? \n";
             
-            std::cout << "Game Name: ";
-            std::getline(std::cin, name);
+            // std::cout << "Game Name: ";
+            // std::getline(std::cin, name);
             
-            std::cout << "Change your rating: ";
-            std::cin >> rating; 
+            // std::cout << "Change your rating: ";
+            // std::cin >> rating; 
             
         }else{
             choice == 4; 
