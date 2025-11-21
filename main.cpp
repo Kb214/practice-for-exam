@@ -113,8 +113,8 @@ class Game{
     std::string name;
     std::string genre;
 
-    Game(double y, float r, std::string n, std::string g)
-    : year(y), rating(r), name(n), genre(g){}
+    Game(std::string n, double y, std::string g, float r)
+    : name(n), year(y), genre(g), rating(r){}
     
 };
 
@@ -125,12 +125,55 @@ class GameList{
 
     public:
 
-    void addGame(const Game& game);
-    void removeGame(const Game& game);
-    void getGames(const Game& game);
-    void changeRating(const Game& game);
+    void addGame(const Game& g){
+        games.push_back(g);
+    }
+
+
+    void removeGame(std::string title){
+        std::cout << "Remove Game: ";
+        std::getline(std::cin, title);
+        
+        for(size_t x = 0; x < games.size(); ++x){ //go through the game vector
+
+            if(games.at(x).name == title){ //if game is at this name and the name equals the title
+                games.erase(games.begin() + x); //remove game
+            }
+        }
+    }
+
+
+    void getGames(){
+
+        for(size_t x = 0; x < games.size(); ++x){
+            std::cout << "\n";
+            
+            std::cout << "Title: " << games.at(x).name << "\n";
+            std::cout << "Year: " << games.at(x).year << "\n";
+            std::cout << "Genre: " << games.at(x).genre << "\n";
+            std::cout << "Rating: " << games.at(x).rating << "\n";
+        }      
+    }
+
+
+    void changeRating(){
+        std::string title;
+
+        std::cout << "Title: ";
+        std::getline(std::cin, title);
+
+        for(size_t x = 0; x < games.size(); ++x){
+            if(games.at(x).name == title){
+                std::cout << "Your New Rating: ";
+                std::cin >> games.at(x).rating; 
+                std::cin.ignore();
+            }
+        }
+    }
 
 };
+
+
 
 
 
