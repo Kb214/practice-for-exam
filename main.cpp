@@ -3,7 +3,6 @@
 #include <string>
 #include <algorithm>
 
-
 void choices(){
     std::cout << "\n======== Would you like to:========\n";
     std::cout << "1) ADD Game\n";
