@@ -1,6 +1,16 @@
 #include <iostream>
 #include "gamelist.h"
 
+
+void GameList::sortByRating(){
+    std::sort(games.begin(), games.end(),[] (Game& a, Game& b){
+        return a.getRating() > b.getRating();
+    });
+
+    
+}
+
+
 /* ================= Game Class =================*/
 
 Game::Game(std::string n, double y, std::string g, float r)
@@ -23,7 +33,7 @@ double Game::getYear(){
 }
 
 float Game::setRating(float r){
-    rating = r;
+    return rating = r;
 }
 
 
@@ -50,6 +60,8 @@ void GameList::addGame(){
     std::cin >> rating;  
 
     games.push_back(Game(name,year,genre,rating));
+
+    sortByRating();
 }
 
 
@@ -80,6 +92,8 @@ void GameList::getGames(){
     
 }
 
+
+
 void GameList::changeRating(){
     std::string title;
 
@@ -91,18 +105,28 @@ void GameList::changeRating(){
             float r;
             std::cout << "Your New Rating: ";
             std::cin >> r;
+
+            std::cin.ignore();
+
             games.at(x).setRating(r); 
             sortByRating();
-            std::cin.ignore();
+
+            return;
         }
     }
+
+
+    // for (auto& g : games) {
+    //     if (g.getName() == title) {
+    //         float r;
+    //         std::cout << "New rating: ";
+    //         std::cin >> r; 
+    //         std::cin.ignore();
+    //         g.setRating(r);
+    //         sortByRating();
+    //         return;
+    //     }
+    // }
 }
 
 
-void GameList::sortByRating(){
-    std::sort(games.begin(), games.end(),[] (const Game& a, const Game& b){
-        return a.getRating() > b.getRating();
-    });
-
-    
-}
