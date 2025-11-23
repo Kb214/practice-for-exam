@@ -18,6 +18,7 @@ class Game{
     float getRating();
     double getYear();
 
+
     float setRating(float r);
     
 };
@@ -37,5 +38,8 @@ class GameList{
     void changeRating();
 
     void getGames();
+
+    float validateRating();
+    int valiYear();
 
 };

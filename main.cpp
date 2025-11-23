@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <limits>
 
 #include "gamelist.cpp"
 
@@ -16,6 +17,18 @@ void choices(){
 }
 
 
+float validation() {
+    int choice;
+    while (!(std::cin >> choice) || choice < 1 || choice > 5) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid choice. Enter 1-4: ";
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return choice;
+}
+
+
 int main(){
     int choice{0};
     GameList mygames;
@@ -26,8 +39,8 @@ int main(){
     choices();
     
     std::cout << "\nChoice: ";
-    std::cin >> choice;
-    std::cin.ignore();
+    choice = validation();
+    
     
     while(choice != 5){
 
@@ -71,10 +84,10 @@ int main(){
             choice == 5; 
         }
 
+        
         std::cout << "\nChoice: ";
-        std::cin >> choice;
-        std::cin.ignore();
-    
+        choice = validation();
+       
     }
     
     return 0;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include "gamelist.h"
 
 
@@ -41,6 +42,29 @@ float Game::setRating(float r){
 /* ================= Game List Class =================*/
 
 
+
+float GameList::validateRating(){
+    float rating;
+    while (!(std::cin >> rating) || rating < 1 || rating > 5) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid Rating. Enter 1-5: ";
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return rating;
+}
+
+int GameList::valiYear(){
+    int choice;
+    while (!(std::cin >> choice) || choice < 1000 || choice > 3000) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid Year (valid years: 1000-3000): ";
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return choice;
+}
+
 void GameList::addGame(){
     std::string name, genre;
     double year;
@@ -49,15 +73,15 @@ void GameList::addGame(){
     std::cout << "Title: ";
     std::getline(std::cin, name);
     
-    std::cout << "Year: ";
-    std::cin >> year;
-    std::cin.ignore();
+    std::cout << "Year (valid years: 1000-3000): ";
+    year = valiYear();
     
     std::cout << "Genre: ";
     std::getline(std::cin, genre);
     
-    std::cout << "Rating(Out of 5): ";
-    std::cin >> rating;  
+    std::cout << "Rating (Out of 5): ";
+    rating = validateRating();
+
 
     games.push_back(Game(name,year,genre,rating));
 
@@ -84,9 +108,9 @@ void GameList::getGames(){
         std::cout << "\n";
         
         std::cout << "Title: " << games.at(x).getName() << "\n";
-        std::cout << "Year: " << games.at(x).getYear() << "\n";
+        std::cout << "Year (don't go any further than the year 3000): " << games.at(x).getYear() << "\n";
         std::cout << "Genre: " << games.at(x).getGenre() << "\n";
-        std::cout << "Rating: " << games.at(x).getRating() << "\n";
+        std::cout << "Rating (out of 5): " << games.at(x).getRating() << "\n";
     } 
     
     
@@ -103,7 +127,7 @@ void GameList::changeRating(){
     for(size_t x = 0; x < games.size(); ++x){
         if(games.at(x).getName() == title){
             float r;
-            std::cout << "Your New Rating: ";
+            std::cout << "Your New Rating (out 5): ";
             std::cin >> r;
 
             std::cin.ignore();
