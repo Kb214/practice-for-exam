@@ -50,6 +50,8 @@ int main(){
     std::ofstream writingFile("writing.txt");
     std::vector<int> num{1, 2, 3, 4, 5};
 
+
+    /* wrting the num vector into the writingFile using ranged-based for loop*/
     if(writingFile.is_open()){
         for( int n : num){
 
@@ -57,27 +59,41 @@ int main(){
 
         }
     }
-
+    /* Closing file */
     writingFile.close();
 
+
+    /*Creating a stream to read from writing.txt*/
     std::ifstream readingFileTwo("writing.txt");
 
+    /*same concepts like above for readingFile.txt*/
     if(!readingFileTwo.is_open()){
         std::cout << "opening file...\n\n";
         readingFileTwo.open("writing.txt");
     }
 
-    std::stringstream ssTwo;
+    /*Establishes the full lines you will read*/
     std::string linesTwo;
 
-    while(getline(readingFileTwo, linesTwo)){
-        int numbers;
+    if(readingFile.is_open()){
+        /*while function that reads the entire line including spaces. 
+         it reads the input stream and stores it into linesTwo
+         
+                      inputStream     targetString*/
+        while(getline(readingFileTwo, linesTwo)){
+            /* stores linesTwo into ssTwo, turning into a streamString object to read in the numbers*/
+            std::stringstream ssTwo(linesTwo);
+            int numbers;
 
-        if(ssTwo >> numbers){
-
+            if(ssTwo >> numbers){
+                /* while ssTwo reads the numbers, output them*/
+                std::cout << "Number " << numbers << "\n";
+            }
         }
+
     }
 
+   
     
 
     return 0;
