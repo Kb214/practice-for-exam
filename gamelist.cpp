@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <iterator>
 #include "gamelist.h"
 
 
@@ -18,7 +19,7 @@ Game::Game(std::string n, double y, std::string g, float r)
     : name(n), year(y), genre(g), rating(r){}
 
 std::string Game::getName(){
-    return name; 
+    return name;
 }
 
 std::string Game::getGenre(){
